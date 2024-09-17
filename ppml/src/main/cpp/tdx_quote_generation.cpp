@@ -22,7 +22,7 @@
 #include <time.h>
 #include "tdx_attest.h"
 
-#define devname         "/dev/tdx-attest"
+#define devname         "/dev/tdx-guest"
 
 #define HEX_DUMP_SIZE   16
 #define MAX_ROW_SIZE    70

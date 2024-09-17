@@ -39,11 +39,11 @@ public class Loader {
         // TODO: check SGX device to determine whether to load libquote_verification
         libraries.add("quote_verification");
 
-        File tdx_dev = new File("/dev/tdx-attest");
+        File tdx_dev = new File("/dev/tdx-guest");
         if (tdx_dev.exists()) {
             libraries.add("tdx_quote_generation");
         } else {
-            System.out.println("Not found /dev/tdx-attest, disable TDX quote generation.");
+            System.out.println("Not found /dev/tdx-guest, disable TDX quote generation.");
         }
 
         Path tempDir = null;

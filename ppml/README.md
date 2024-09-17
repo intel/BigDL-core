@@ -10,12 +10,12 @@ C++ SGX/TDX attestation module for PPML
  
 1. [Install Intel SGX SDK](https://github.com/intel/linux-sgx#install-the-intelr-sgx-sdk)
 
-2. Install SGX DCAP 1.14 libs
+2. Install SGX DCAP 1.16 libs
 
 ```bash
 # Ubuntu 20.04, root
 cd /opt/intel 
-wget https://download.01.org/intel-sgx/sgx-dcap/1.14/linux/distro/ubuntu20.04-server/sgx_debian_local_repo.tgz 
+wget https://download.01.org/intel-sgx/sgx-dcap/1.16/linux/distro/ubuntu20.04-server/sgx_debian_local_repo.tgz 
 tar xzf sgx_debian_local_repo.tgz 
 echo 'deb [trusted=yes arch=amd64] file:///opt/intel/sgx_debian_local_repo focal main' | tee /etc/apt/sources.list.d/intel-sgx.list 
 wget -qO - https://download.01.org/intel-sgx/sgx_repo/ubuntu/intel-sgx-deb.key | apt-key add - 

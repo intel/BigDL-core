@@ -41,7 +41,7 @@ public class AttestationTest {
 
     @Test
     public void generateTDXQuote() throws Exception {
-        File tdx_dev = new File("/dev/tdx-attest");
+        File tdx_dev = new File("/dev/tdx-guest");
         if (tdx_dev.exists()) {
             Attestation tdx = new Attestation();
             byte[] reportData = "ppmltest".getBytes();
