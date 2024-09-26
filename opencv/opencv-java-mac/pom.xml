@@ -15,11 +15,11 @@
     <packaging>jar</packaging>
 
     <properties>
-        <opencvlib>libopencv_java420.dylib</opencvlib>
-        <libopencv_core>libopencv_core.4.2.0.dylib</libopencv_core>
-        <libopencv_imgcodecs>libopencv_imgcodecs.4.2.0.dylib</libopencv_imgcodecs>
-        <libopencv_imgproc>libopencv_imgproc.4.2.0.dylib</libopencv_imgproc>
-        <opencvjar>opencv-420.jar</opencvjar>
+        <opencvlib>libopencv_java480.dylib</opencvlib>
+        <libopencv_core>libopencv_core.4.8.0.dylib</libopencv_core>
+        <libopencv_imgcodecs>libopencv_imgcodecs.4.8.0.dylib</libopencv_imgcodecs>
+        <libopencv_imgproc>libopencv_imgproc.4.8.0.dylib</libopencv_imgproc>
+        <opencvjar>opencv-480.jar</opencvjar>
         <opencvDir>/opt/opencv/</opencvDir>
     </properties>
 
@@ -48,7 +48,7 @@
                         <configuration>
                             <tasks>
                                 <echo>Extracting Java classes.</echo>
-                                <unjar src="${opencvDir}/opencv-420.jar"
+                                <unjar src="${opencvDir}/opencv-480.jar"
                                        dest="${project.build.directory}/classes">
                                     <patternset>
                                         <include name="**/*.class"/>
@@ -56,7 +56,7 @@
                                 </unjar>
 
                                 <echo>Extracting Java sources.</echo>
-                                <unjar src="${opencvDir}/opencv-420.jar"
+                                <unjar src="${opencvDir}/opencv-480.jar"
                                        dest="${project.build.directory}/upstream-sources">
                                     <patternset>
                                         <include name="**/*.java"/>
