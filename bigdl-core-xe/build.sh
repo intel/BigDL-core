@@ -21,4 +21,15 @@ cmake --build ${cur_build_path} --config Release -j
 
 cp ${cur_build_path}/*.so .
 
+cur_path=./ggml
+cur_build_path=${cur_path}/build
+
+cmake -B ${cur_build_path} ${cur_path}
+
+cmake --build ${cur_build_path}
+
+cp ${cur_build_path}/*.so .
+
+mv ./libquantize.so ./vllm_int4_for_multi_arc.so
+
 python3 setup.py clean --all bdist_wheel --plat-name manylinux2010_x86_64 --python-tag py3
