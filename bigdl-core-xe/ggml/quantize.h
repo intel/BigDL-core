@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <immintrin.h>
 
-#define QK4_0 64
+#define QK4_0 128
 
 #ifdef GGML_SHARED
 #if defined(_WIN32) && !defined(__MINGW32__)
