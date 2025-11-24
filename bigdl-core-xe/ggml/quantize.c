@@ -183,9 +183,11 @@ static inline ggml_fp16_t ggml_compute_fp32_to_fp16(float f)
 
 #endif // __ARM_NEON
 
-static void quantize_row_q4_0_gptq_reference(const float * RESTRICT in_src, int32_t * RESTRICT out_qweight, ggml_fp16_t * RESTRICT out_scale, int in_features) {
-    static const int qk = QK4_0;
+static void quantize_row_q4_0_gptq_reference(const float * RESTRICT in_src, int32_t * RESTRICT out_qweight, ggml_fp16_t * RESTRICT out_scale, int in_features, int block_size) {
+    // static const int qk = QK4_0;
+    const int qk = block_size;
 
+    assert(qk > 0 && qk % 8 == 0);
     assert(in_features % qk == 0);
 
     const int nb = in_features / qk;
@@ -207,8 +209,7 @@ static void quantize_row_q4_0_gptq_reference(const float * RESTRICT in_src, int3
 
         // Store the scale -> for each block
         out_scale[i] = GGML_FP32_TO_FP16(d);
-        // out_scale[i] = GGML_COMPUTE_FP32_TO_FP16(d);
-
+        
         for (int j = 0; j < qk; j += 8) {
             int index = i * qk + j;
 #pragma unroll 8
@@ -227,23 +228,23 @@ size_t quantize_q4_0_to_qweight_and_scale(
     int32_t *qweight,
     ggml_fp16_t *scale,
     int out_features,
-    int in_features)
+    int in_features,
+    int block_size)
 {
-    // Quantize using QK4_0
-    assert(in_features % QK4_0 == 0);
+    assert(block_size > 0);
+    assert(in_features % block_size == 0);
 
-    const int nb = in_features / QK4_0;
     const int n = out_features * in_features;
 
     int64_t b = 0;
 #pragma omp parallel for schedule(dynamic, 1)
     for (b = 0; b < n; b += in_features)
     {
-        // Quantize each row
-        // 32bits / 4bits = 8
-        int32_t *qweight_out = qweight + b / 8;
-        ggml_fp16_t *scale_out = scale + b / QK4_0;
-        quantize_row_q4_0_gptq_reference(src + b, qweight_out, scale_out, in_features);
+        int32_t *qweight_out = qweight + b / 8; 
+        
+        ggml_fp16_t *scale_out = scale + b / block_size;
+        
+        quantize_row_q4_0_gptq_reference(src + b, qweight_out, scale_out, in_features, block_size);
     }
 
     return 0;

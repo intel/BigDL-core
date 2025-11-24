@@ -37,12 +37,14 @@ extern "C" {
 #define RESTRICT restrict
 #endif
 
+// [修改点]: 增加了 block_size 参数
 GGML_API size_t quantize_q4_0_to_qweight_and_scale(
     const float *src,
     int32_t *qweight,
     ggml_fp16_t *scale,
     int out_features,
-    int in_features);
+    int in_features,
+    int block_size); 
 
 #ifdef __cplusplus
 }
